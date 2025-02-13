@@ -7,7 +7,7 @@ import { findFilesToUpload } from "./search";
 import { getInputs } from "./input-helper";
 import { NoFileOptions } from "./constants";
 
-import { S3Client } from "@aws-sdk/client-s3";
+import { PutBucketAclCommand, PutBucketAclCommandInput, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 
 async function run(): Promise<void> {
@@ -42,6 +42,7 @@ async function run(): Promise<void> {
       const s3Client = new S3Client({
         region: inputs.region,
         endpoint: inputs.s3Endpoint,
+        forcePathStyle: false,
         credentials: {
           accessKeyId: inputs.s3AccessKey,
           secretAccessKey: inputs.s3SecretAccessKey,
@@ -94,11 +95,12 @@ async function run(): Promise<void> {
         const contentType = mime.lookup(uploadKey).toString();
 
         // Set the upload parameters.
-        const uploadParams = {
+        const uploadParams: PutObjectCommandInput = {
           Bucket: inputs.s3Bucket,
           Key: uploadKey,
           Body: fileStream,
           Expires: expirationDate,
+          ACL: "public-read",
           ContentType: contentType,
         };
 

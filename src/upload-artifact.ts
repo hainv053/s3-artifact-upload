@@ -42,6 +42,10 @@ async function run(): Promise<void> {
       const s3Client = new S3Client({
         region: inputs.region,
         endpoint: inputs.s3Endpoint,
+        credentials: {
+          accessKeyId: inputs.s3AccessKey,
+          secretAccessKey: inputs.s3SecretAccessKey,
+        },
         maxAttempts: 10,
       });
 

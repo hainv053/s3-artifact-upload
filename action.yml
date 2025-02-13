@@ -26,6 +26,14 @@ inputs:
 
       Minimum 1 day.
       Maximum 90 days unless changed from the repository settings page.
+  s3-access-key-id:
+    description: >
+      S3 Access Key ID
+    required: true
+  s3-secret-access-key:
+    description: >
+      S3 Secret Access Key
+    required: true
   s3-bucket:
     description: >
       S3 Bucket to use to put your artifacts in, typically something like "gha-artifacts"

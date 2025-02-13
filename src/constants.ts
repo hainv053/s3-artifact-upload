@@ -6,6 +6,8 @@ export enum Inputs {
   S3Bucket = "s3-bucket",
   S3Prefix = "s3-prefix",
   S3Endpoint = "s3-endpoint",
+  S3AccessKey = "s3-access-key-id",
+  S3SecretAccessKey = "s3-secret-access-key",
   Region = "region",
 }
 

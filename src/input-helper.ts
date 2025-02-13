@@ -14,6 +14,8 @@ export function getInputs(): UploadInputs {
   const s3Bucket = core.getInput(Inputs.S3Bucket);
   const s3Prefix = core.getInput(Inputs.S3Prefix);
   const s3Endpoint = core.getInput(Inputs.S3Endpoint);
+  const s3AccessKey = core.getInput(Inputs.S3AccessKey);
+  const s3SecretAccessKey = core.getInput(Inputs.S3SecretAccessKey);
   const region = core.getInput(Inputs.Region);
 
   if (!noFileBehavior) {
@@ -33,6 +35,8 @@ export function getInputs(): UploadInputs {
     s3Bucket: s3Bucket,
     s3Prefix: s3Prefix,
     s3Endpoint: s3Endpoint,
+    s3AccessKey: s3AccessKey,
+    s3SecretAccessKey: s3SecretAccessKey,
     region: region,
   } as UploadInputs;
 

@@ -7,7 +7,12 @@ import { findFilesToUpload } from "./search";
 import { getInputs } from "./input-helper";
 import { NoFileOptions } from "./constants";
 
-import { PutBucketAclCommand, PutBucketAclCommandInput, PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
+import {
+  PutBucketAclCommand,
+  PutBucketAclCommandInput,
+  PutObjectCommandInput,
+  S3Client,
+} from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 
 async function run(): Promise<void> {

@@ -62082,6 +62082,8 @@ var Inputs;
     Inputs["S3Bucket"] = "s3-bucket";
     Inputs["S3Prefix"] = "s3-prefix";
     Inputs["S3Endpoint"] = "s3-endpoint";
+    Inputs["S3AccessKey"] = "s3-access-key-id";
+    Inputs["S3SecretAccessKey"] = "s3-secret-access-key";
     Inputs["Region"] = "region";
 })(Inputs || (exports.Inputs = Inputs = {}));
 var NoFileOptions;
@@ -62146,6 +62148,8 @@ function getInputs() {
     const s3Bucket = core.getInput(constants_1.Inputs.S3Bucket);
     const s3Prefix = core.getInput(constants_1.Inputs.S3Prefix);
     const s3Endpoint = core.getInput(constants_1.Inputs.S3Endpoint);
+    const s3AccessKey = core.getInput(constants_1.Inputs.S3AccessKey);
+    const s3SecretAccessKey = core.getInput(constants_1.Inputs.S3SecretAccessKey);
     const region = core.getInput(constants_1.Inputs.Region);
     if (!noFileBehavior) {
         core.setFailed(`Unrecognized ${constants_1.Inputs.IfNoFilesFound} input. Provided: ${ifNoFilesFound}. Available options: ${Object.keys(constants_1.NoFileOptions)}`);
@@ -62157,6 +62161,8 @@ function getInputs() {
         s3Bucket: s3Bucket,
         s3Prefix: s3Prefix,
         s3Endpoint: s3Endpoint,
+        s3AccessKey: s3AccessKey,
+        s3SecretAccessKey: s3SecretAccessKey,
         region: region,
     };
     const retentionDaysStr = core.getInput(constants_1.Inputs.RetentionDays);
@@ -62394,6 +62400,11 @@ async function run() {
             const s3Client = new client_s3_1.S3Client({
                 region: inputs.region,
                 endpoint: inputs.s3Endpoint,
+                forcePathStyle: false,
+                credentials: {
+                    accessKeyId: inputs.s3AccessKey,
+                    secretAccessKey: inputs.s3SecretAccessKey,
+                },
                 maxAttempts: 10,
             });
             if (inputs.s3Prefix !== "") {
@@ -62429,6 +62440,7 @@ async function run() {
                     Key: uploadKey,
                     Body: fileStream,
                     Expires: expirationDate,
+                    ACL: "public-read",
                     ContentType: contentType,
                 };
                 // Configure multipart upload options.
